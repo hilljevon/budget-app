@@ -7,6 +7,7 @@ import ParallaxPage2Form from '../forms/ParallaxPage2Form'
 import Image from 'next/image'
 import { motion, AnimatePresence } from "framer-motion"
 import ParallaxPage3Form from '../forms/ParallaxPage3Form'
+import ParallaxPage4Form from '../forms/ParallaxPage4Form'
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
@@ -17,10 +18,12 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
         { name: 'Step 1', href: '#', status: 'current' },
         { name: 'Step 2', href: '#', status: 'upcoming' },
         { name: 'Step 3', href: '#', status: 'upcoming' },
+        { name: 'Step 4', href: '#', status: 'upcoming' },
+        { name: 'Step 5', href: '#', status: 'upcoming' }
     ])
     return (
         <div className='w-full h-full bg-gray-800'>
-            <Parallax ref={parallax} pages={3}>
+            <Parallax ref={parallax} pages={4}>
                 {/* background slide 1 */}
                 <ParallaxLayer
                     className='bg-green-400'
@@ -43,6 +46,14 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
                 <ParallaxLayer
                     className='bg-cover bg-green-400'
                     offset={2}
+                    speed={2}
+                    factor={2}
+                />
+
+                {/* background slide 4 */}
+                <ParallaxLayer
+                    className='bg-cover bg-green-500'
+                    offset={3}
                     speed={2}
                     factor={2}
                 />
@@ -109,6 +120,14 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
                     className='flex justify-center items-center text-green-900 font-bold text-xl'
                 >
                     <ParallaxPage3Form parallax={parallax} steps={steps} setSteps={setSteps} />
+                </ParallaxLayer>
+                <ParallaxLayer
+                    offset={3}
+                    speed={0.1}
+                    // onClick={() => parallax.current.scrollTo(0)}
+                    className='flex justify-center items-center text-green-900 font-bold text-xl'
+                >
+                    <ParallaxPage4Form parallax={parallax} steps={steps} setSteps={setSteps} />
                 </ParallaxLayer>
             </Parallax>
         </div>

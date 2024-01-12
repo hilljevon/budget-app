@@ -11,6 +11,13 @@ import { useForm } from "react-hook-form"
 import { motion, AnimatePresence } from "framer-motion"
 import { useOnboardingContext } from '@/lib/contexts/OnboardingProvider'
 import { OnboardingProps } from '@/lib/types/types'
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 interface ParallaxProps {
     parallax: any,
     steps: {
@@ -26,30 +33,39 @@ function classNames(...classes: any) {
 const ParallaxPage3Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
     const { formData, setFormData } = useOnboardingContext()
     const [bills, setBills] = useState([
-        { name: '', price: '', frequency: '', type: '' }
+        { name: '', price: '', frequency: 'monthly', category: '' }
     ])
-    const [subscriptions, setSubscriptions] = useState([
-        { name: '', price: '', frequency: '', type: '' }
-    ])
-    const onChange = () => {
-
+    const onChange = (idx: number, event: React.ChangeEvent<HTMLInputElement>) => {
+        let data: any[] = [...bills]
+        let name = event.target.name
+        let val = event.target.value;
+        data[idx][name] = val
+        setBills(data)
     }
     const addRow = (type: string) => {
-        if (type === 'bill') {
-            setBills((oldBills: any[]) => {
-                return [...oldBills, { name: '', price: '', frequency: '', type: '' }]
-            })
-        } else {
-            setSubscriptions((oldSubs: any[]) => {
-                return [...oldSubs, { name: '', price: '', frequency: '', type: '' }]
-            })
-        }
+        setBills((oldBills: any[]) => {
+            return [...oldBills, { name: '', price: '', frequency: 'monthly', type: '' }]
+        })
     }
     const onSubmit = () => {
-
+        console.log(bills)
+        setFormData && setFormData((oldFormData: OnboardingProps) => {
+            return {
+                ...oldFormData,
+                bills: [...bills],
+            }
+        })
+        setSteps((oldSteps: any) => {
+            let newSteps = [...oldSteps]
+            newSteps[2] = {
+                name: 'Step 3', href: '#', status: 'complete'
+            }
+            return newSteps
+        })
+        parallax.current.scrollTo(3)
     }
     return (
-        <div>
+        <>
             <div className='bg-white rounded-lg flex  flex-col items-center justify-center'>
                 {/* progress bar */}
                 <nav className='mt-4 mx-4'>
@@ -105,43 +121,55 @@ const ParallaxPage3Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
                     </ol>
                 </nav>
                 {/* form 1  */}
+
                 <div className='grid grid-cols-6 py-2 px-4'>
+                    <h1>Bills</h1>
                     {bills.map((bill, idx) => (
-                        <div key={idx} className='col-span-6 mt-2'>
-                            <label htmlFor=""> Title </label>
-                            <input type="text" />
-                            <label htmlFor="">Price</label>
-                            <input type="text" />
-                            <label htmlFor="">Category</label>
-                            <input type="text" />
+                        <div key={idx} className='col-span-6 mt-2 border-b-2 pb-4'>
+                            <label className='mx-2' htmlFor=""> Title </label>
+                            <input
+                                className="input-green"
+                                type="text"
+                                name='name'
+                                value={bill.name}
+                                onChange={(event) => onChange(idx, event)}
+                            />
+                            <label className='mx-2' htmlFor="">Price</label>
+                            <input
+                                className="input-green"
+                                type="text"
+                                name='price'
+                                value={bill.price}
+                                onChange={(event) => onChange(idx, event)}
+                            />
+                            <label className='mx-2' htmlFor="">Category</label>
+                            <input
+                                className="input-green"
+                                type="text"
+                                name='category'
+                                value={bill.category}
+                                onChange={(event) => onChange(idx, event)}
+                            />
                         </div>
                     ))}
                     <button
-                        className='rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible'
+                        className='rounded-md bg-green-600 px-3 mt-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible'
                         onClick={() => addRow('bill')}
                     >
                         Add Bill
                     </button>
                     <div className="col-span-6 mt-2">
                         <button
-                            onClick={() => {
-                                parallax.current.scrollTo(2)
-                                setSteps((oldSteps: any) => {
-                                    let newSteps = [...oldSteps]
-                                    newSteps[2] = {
-                                        name: 'Step 3', href: '#', status: 'complete'
-                                    }
-                                    return newSteps
-                                })
-                            }}
+                            onClick={onSubmit}
                             className='rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible'
                         >
-                            Complete
+                            Next
                         </button>
+
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 
