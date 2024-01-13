@@ -66,7 +66,7 @@ const ParallaxPage1Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
                 phone: values.phone
             }
         })
-        setIsVisible(false)
+        // setIsVisible(false)
         setSteps((oldSteps: any) => {
             let newSteps = [...oldSteps]
             newSteps[0] = {

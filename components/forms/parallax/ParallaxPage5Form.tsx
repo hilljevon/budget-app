@@ -1,23 +1,10 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import { CheckIcon } from '@heroicons/react/24/solid'
-import {
-    Form,
-    FormField,
-} from "@/components/ui/form"
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { motion, AnimatePresence } from "framer-motion"
 import { useOnboardingContext } from '@/lib/contexts/OnboardingProvider'
-import { OnboardingProps } from '@/lib/types/types'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import { createUser } from '@/lib/actions/user.actions'
+import { usePathname, useRouter } from 'next/navigation'
+
 interface ParallaxProps {
     parallax: any,
     steps: {
@@ -25,16 +12,75 @@ interface ParallaxProps {
         href: string,
         status: string
     }[],
-    setSteps: React.Dispatch<React.SetStateAction<any>>
+    setSteps: React.Dispatch<React.SetStateAction<any>>,
+    clerkId: string
 }
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
-const ParallaxPage5Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
+const ParallaxPage5Form = ({ parallax, steps, setSteps, clerkId }: ParallaxProps) => {
     const { formData, setFormData } = useOnboardingContext()
-    console.log(formData)
+    const path = usePathname()
+    const router = useRouter()
+    const handleSubmit = async () => {
+        const submitObject = { ...formData, clerkId: clerkId }
+        console.log(submitObject)
+        const user = await createUser(submitObject, clerkId)
+    }
     return (
-        <div className='bg-white rounded-lg flex  flex-col items-center justify-center'>
+        <div className='bg-white rounded-lg flex flex-col items-center justify-center'>
+            <nav className='m-4'>
+                <ol role="list" className="flex items-center">
+                    {steps.map((step, stepIdx) => (
+                        <li key={step.name} className={classNames(stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : '', 'relative')}>
+                            {step.status === 'complete' ? (
+                                <>
+                                    <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                                        <div className="h-0.5 w-full bg-green-600" />
+                                    </div>
+                                    <a
+                                        href="#"
+                                        className="relative flex h-8 w-8 items-center justify-center rounded-full bg-green-600 hover:bg-green-900"
+                                    >
+                                        <CheckIcon className="h-5 w-5 text-white" aria-hidden="true" />
+                                        <span className="sr-only">{step.name}</span>
+                                    </a>
+                                </>
+                            ) : step.status === 'current' ? (
+                                <>
+                                    <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                                        <div className="h-0.5 w-full bg-gray-200" />
+                                    </div>
+                                    <a
+                                        href="#"
+                                        className="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-green-600 bg-white"
+                                        aria-current="step"
+                                    >
+                                        <span className="h-2.5 w-2.5 rounded-full bg-green-600" aria-hidden="true" />
+                                        <span className="sr-only">{step.name}</span>
+                                    </a>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                                        <div className="h-0.5 w-full bg-gray-200" />
+                                    </div>
+                                    <a
+                                        href="#"
+                                        className="group relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-gray-300 bg-white hover:border-gray-400"
+                                    >
+                                        <span
+                                            className="h-2.5 w-2.5 rounded-full bg-transparent group-hover:bg-gray-300"
+                                            aria-hidden="true"
+                                        />
+                                        <span className="sr-only">{step.name}</span>
+                                    </a>
+                                </>
+                            )}
+                        </li>
+                    ))}
+                </ol>
+            </nav>
             <div className='grid grid-cols-6 py-2 px-4'>
                 {/* first name */}
                 <div className="col-span-3">
@@ -110,8 +156,8 @@ const ParallaxPage5Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
                 </div>
                 {/* bills */}
                 <h2 className=' my-3'>Bills</h2>
-                {formData?.bills.map((bill) => (
-                    <div className='col-span-6'>
+                {formData?.bills.map((bill, key) => (
+                    <div key={bill.name} className='col-span-6'>
                         <label className='mx-2' htmlFor=""> Name </label>
                         <input
                             className='flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6'
@@ -141,7 +187,7 @@ const ParallaxPage5Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
                 {/* subscriptions */}
                 <h2 className='my-3'>Subscriptions</h2>
                 {formData?.subscriptions.map((sub) => (
-                    <div className='col-span-6'>
+                    <div key={sub.name} className='col-span-6'>
                         <label className='mx-2' htmlFor=""> Name </label>
                         <input
                             className='flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6'
@@ -168,6 +214,32 @@ const ParallaxPage5Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
                         />
                     </div>
                 ))}
+            </div>
+            <div className="flex">
+                {/* EDIT BUTTON */}
+                <button
+                    onClick={() => {
+                        parallax.current.scrollTo(0)
+                        setSteps((oldSteps: any) => {
+                            let newSteps = [...oldSteps]
+                            newSteps[4] = {
+                                name: 'Step 5', href: '#', status: 'upcoming'
+                            }
+                            newSteps[0] = {
+                                name: 'Step 1', href: '#', status: 'current'
+                            }
+                            return newSteps
+                        })
+                    }}
+                    className='rounded-md bg-yellow-600 mx-4 px-3 py-2 mb-3 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible'
+                >
+                    Edit
+                </button>
+                <button
+                    className='rounded-md bg-blue-600 px-3 py-2 mb-3 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible'
+                    onClick={handleSubmit} >
+                    Submit
+                </button>
             </div>
         </div>
     )

@@ -2,13 +2,23 @@
 import React, { useContext, useState } from "react"
 import { OnboardingProps } from "../types/types"
 interface OnboardingProviderType {
-    formData: OnboardingProps | undefined,
-    setFormData: React.Dispatch<React.SetStateAction<any>> | undefined
+    formData: OnboardingProps,
+    setFormData: React.Dispatch<React.SetStateAction<any>>
 }
 
 const OnboardingContext = React.createContext<OnboardingProviderType>({
-    formData: undefined,
-    setFormData: undefined
+    formData: {
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        currentBalance: '',
+        monthlyIncome: '',
+        transactionsByDate: {},
+        bills: [],
+        subscriptions: []
+    },
+    setFormData: () => null
 })
 export const useOnboardingContext = () => {
     return useContext(OnboardingContext)

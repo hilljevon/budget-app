@@ -144,7 +144,7 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
                     // onClick={() => parallax.current.scrollTo(0)}
                     className='flex justify-center items-center text-green-900 font-bold text-xl'
                 >
-                    <ParallaxPage5Form parallax={parallax} steps={steps} setSteps={setSteps} />
+                    <ParallaxPage5Form parallax={parallax} steps={steps} setSteps={setSteps} clerkId={clerkId} />
                 </ParallaxLayer>
             </Parallax>
         </div>

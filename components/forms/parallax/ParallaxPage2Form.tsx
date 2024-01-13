@@ -53,7 +53,7 @@ const ParallaxPage2Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
             complete: async function (results: any) {
                 // console.log('MY RESULTS HERE', results.data)
                 const resultsByDate = await handleBankData(results.data)
-                setParsedResults(resultsByDate)
+                await setParsedResults(resultsByDate)
             }
         })
     }
@@ -62,8 +62,8 @@ const ParallaxPage2Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
         setFormData && setFormData((oldFormData: OnboardingProps) => {
             return {
                 ...oldFormData,
-                currentBalance: values.currentBalance,
-                monthlyIncome: values.monthlyIncome,
+                currentBalance: parseFloat(values.currentBalance),
+                monthlyIncome: parseFloat(values.monthlyIncome),
                 transactionsByDate: parsedResults
             }
         })

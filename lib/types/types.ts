@@ -17,6 +17,7 @@ export type OnboardingProps = {
         category: string,
         frequency: string
     }[],
+    transactionsByDate: any
 }
 export type CsvDataProps = {
     Amount: string,
@@ -25,4 +26,44 @@ export type CsvDataProps = {
     Currency: string,
     Date: string,
     Description: string
+}
+export type InitialOnboardingProps = {
+    bills: {
+        category: string,
+        frequency: string,
+        name: string,
+        price: string | number
+    }[],
+    currentBalance: string | number,
+    email: string,
+    firstName: string,
+    lastName: string,
+    monthlyIncome: string | number,
+    phone: string,
+    subscriptions: {
+        category: string,
+        frequency: string,
+        name: string,
+        price: string | number
+    }[],
+    // transactionsByDate: {
+    //     [key: string]: {
+    //         Amount: string | number,
+    //         Balance: string | number,
+    //         Currency: string,
+    //         Date: string,
+    //         Description: string
+    //     }[]
+    // },
+    transactionsByDate: any,
+    clerkId: string
+}
+interface transactionsByDate {
+    [key: string]: {
+        Amount: string | number,
+        Balance: string | number,
+        Currency: string,
+        Date: string,
+        Description: string
+    }[]
 }
