@@ -2,12 +2,13 @@
 import { useRef, useState } from 'react'
 import { Parallax, ParallaxLayer, IParallax } from '@react-spring/parallax'
 import { CheckIcon } from '@heroicons/react/24/solid'
-import ParallaxPage1Form from '../forms/ParallaxPage1Form'
-import ParallaxPage2Form from '../forms/ParallaxPage2Form'
+import ParallaxPage1Form from '../forms/parallax/ParallaxPage1Form'
+import ParallaxPage2Form from '../forms/parallax/ParallaxPage2Form'
 import Image from 'next/image'
 import { motion, AnimatePresence } from "framer-motion"
-import ParallaxPage3Form from '../forms/ParallaxPage3Form'
-import ParallaxPage4Form from '../forms/ParallaxPage4Form'
+import ParallaxPage3Form from '../forms/parallax/ParallaxPage3Form'
+import ParallaxPage4Form from '../forms/parallax/ParallaxPage4Form'
+import ParallaxPage5Form from '../forms/parallax/ParallaxPage5Form'
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
@@ -23,7 +24,7 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
     ])
     return (
         <div className='w-full h-full bg-gray-800'>
-            <Parallax ref={parallax} pages={4}>
+            <Parallax ref={parallax} pages={5}>
                 {/* background slide 1 */}
                 <ParallaxLayer
                     className='bg-green-400'
@@ -54,6 +55,12 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
                 <ParallaxLayer
                     className='bg-cover bg-green-500'
                     offset={3}
+                    speed={2}
+                    factor={2}
+                />
+                <ParallaxLayer
+                    className='bg-cover bg-green-600'
+                    offset={4}
                     speed={2}
                     factor={2}
                 />
@@ -112,7 +119,7 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
                 >
                     <ParallaxPage2Form parallax={parallax} steps={steps} setSteps={setSteps} />
                 </ParallaxLayer>
-                {/* PAGE 3 CONTENT */}
+                {/* PAGE 3 CONTENT - BILLS */}
                 <ParallaxLayer
                     offset={2}
                     speed={0.1}
@@ -121,6 +128,7 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
                 >
                     <ParallaxPage3Form parallax={parallax} steps={steps} setSteps={setSteps} />
                 </ParallaxLayer>
+                {/* PAGE 4 CONTENT - SUBSCRIPTIONS */}
                 <ParallaxLayer
                     offset={3}
                     speed={0.1}
@@ -128,6 +136,15 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
                     className='flex justify-center items-center text-green-900 font-bold text-xl'
                 >
                     <ParallaxPage4Form parallax={parallax} steps={steps} setSteps={setSteps} />
+                </ParallaxLayer>
+                {/* PAGE 5 CONTENT - OVERVIEW */}
+                <ParallaxLayer
+                    offset={4}
+                    speed={0.1}
+                    // onClick={() => parallax.current.scrollTo(0)}
+                    className='flex justify-center items-center text-green-900 font-bold text-xl'
+                >
+                    <ParallaxPage5Form parallax={parallax} steps={steps} setSteps={setSteps} />
                 </ParallaxLayer>
             </Parallax>
         </div>

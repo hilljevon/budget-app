@@ -86,10 +86,10 @@ const ParallaxPage1Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
                     <motion.div
                         className='bg-white rounded-lg'
                         key="form1"
-                        initial={{ opacity: 0, x: -700 }}
-                        animate={{ opacity: 1, y: 0, x: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5, ease: 'linear', y: { duration: 1 }, type: 'spring', stiffness: 100 }}
+                    // initial={{ opacity: 0, x: -700 }}
+                    // animate={{ opacity: 1, y: 0, x: 0 }}
+                    // exit={{ opacity: 0 }}
+                    // transition={{ duration: 0.5, ease: 'linear', y: { duration: 1 }, type: 'spring', stiffness: 100 }}
                     >
                         {/* progress bar 1 */}
                         <nav className='mt-4 mx-4'>

@@ -22,7 +22,8 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
         currentBalance: '',
         monthlyIncome: '',
         transactionsByDate: {},
-        bills: []
+        bills: [],
+        subscriptions: []
     })
     const values = { formData, setFormData }
     return (

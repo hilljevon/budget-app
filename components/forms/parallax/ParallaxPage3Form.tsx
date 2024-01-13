@@ -33,7 +33,7 @@ function classNames(...classes: any) {
 const ParallaxPage3Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
     const { formData, setFormData } = useOnboardingContext()
     const [bills, setBills] = useState([
-        { name: '', price: '', frequency: 'monthly', category: '' }
+        { name: '', price: '', frequency: 'monthly', category: '' },
     ])
     const onChange = (idx: number, event: React.ChangeEvent<HTMLInputElement>) => {
         let data: any[] = [...bills]
@@ -48,7 +48,6 @@ const ParallaxPage3Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
         })
     }
     const onSubmit = () => {
-        console.log(bills)
         setFormData && setFormData((oldFormData: OnboardingProps) => {
             return {
                 ...oldFormData,
@@ -59,6 +58,9 @@ const ParallaxPage3Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
             let newSteps = [...oldSteps]
             newSteps[2] = {
                 name: 'Step 3', href: '#', status: 'complete'
+            }
+            newSteps[3] = {
+                name: 'Step 4', href: '#', status: 'current'
             }
             return newSteps
         })
@@ -121,7 +123,6 @@ const ParallaxPage3Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
                     </ol>
                 </nav>
                 {/* form 1  */}
-
                 <div className='grid grid-cols-6 py-2 px-4'>
                     <h1>Bills</h1>
                     {bills.map((bill, idx) => (

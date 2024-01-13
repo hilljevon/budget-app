@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form"
 import { motion, AnimatePresence } from "framer-motion"
 import { useOnboardingContext } from '@/lib/contexts/OnboardingProvider'
 import { OnboardingProps } from '@/lib/types/types'
-import { Input } from '../ui/input'
+import { Input } from '../../ui/input'
 import Papa from 'papaparse'
 import { handleBankData } from '@/lib/utils'
 

@@ -48,7 +48,23 @@ const ParallaxPage4Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
         })
     }
     const onSubmit = () => {
-        console.log(subscriptions)
+        setFormData && setFormData((oldFormData: OnboardingProps) => {
+            return {
+                ...oldFormData,
+                subscriptions: [...subscriptions],
+            }
+        })
+        setSteps((oldSteps: any) => {
+            let newSteps = [...oldSteps]
+            newSteps[3] = {
+                name: 'Step 4', href: '#', status: 'complete'
+            }
+            newSteps[4] = {
+                name: 'Step 5', href: '#', status: 'current'
+            }
+            return newSteps
+        })
+        parallax.current.scrollTo(4)
     }
     return (
         <div className='bg-white rounded-lg flex  flex-col items-center justify-center'>
