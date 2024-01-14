@@ -14,7 +14,7 @@ const OnboardingContext = React.createContext<OnboardingProviderType>({
         email: '',
         currentBalance: '',
         monthlyIncome: '',
-        transactionsByDate: {},
+        transactionsByDate: [],
         bills: [],
         subscriptions: []
     },
@@ -31,7 +31,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
         email: '',
         currentBalance: '',
         monthlyIncome: '',
-        transactionsByDate: {},
+        transactionsByDate: [],
         bills: [],
         subscriptions: []
     })

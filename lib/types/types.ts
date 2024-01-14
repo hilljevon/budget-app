@@ -17,7 +17,7 @@ export type OnboardingProps = {
         category: string,
         frequency: string
     }[],
-    transactionsByDate: any
+    transactionsByDate: any[]
 }
 export type CsvDataProps = {
     Amount: string,

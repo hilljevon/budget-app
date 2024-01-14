@@ -52,8 +52,10 @@ const ParallaxPage2Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
             skipEmptyLines: true,
             complete: async function (results: any) {
                 // console.log('MY RESULTS HERE', results.data)
-                const resultsByDate = await handleBankData(results.data)
-                await setParsedResults(resultsByDate)
+                // const resultsByDate = await handleBankData(results.data)
+                const parsedData: any[] = results.data
+                setParsedResults(parsedData.splice(0, 10))
+                // setParsedResults(resultsByDate)
             }
         })
     }

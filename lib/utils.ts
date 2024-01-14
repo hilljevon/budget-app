@@ -21,3 +21,10 @@ export async function handleBankData(allData: CsvDataProps[]) {
   })
   return groupedData
 }
+export async function handleTransaction(item: CsvDataProps) {
+  const date = new Date(item.Date)
+  const month = date.getMonth() + 1
+  const year = date.getFullYear()
+  const monthYearKey = `${month}/${year}`
+  return
+}

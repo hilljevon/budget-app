@@ -22,9 +22,9 @@ const ParallaxPage5Form = ({ parallax, steps, setSteps, clerkId }: ParallaxProps
     const { formData, setFormData } = useOnboardingContext()
     const path = usePathname()
     const router = useRouter()
+    console.log(formData)
     const handleSubmit = async () => {
         const submitObject = { ...formData, clerkId: clerkId }
-        console.log(submitObject)
         const user = await createUser(submitObject, clerkId)
     }
     return (

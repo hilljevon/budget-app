@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const userSchema = new mongoose.Schema({
+const MongoUserSchema = new mongoose.Schema({
     clerkId: String,
     firstName: String,
     lastName: String,
@@ -42,5 +42,5 @@ const userSchema = new mongoose.Schema({
     ],
 
 })
-const User = mongoose.models.User || mongoose.model('User', userSchema)
-export default User
+const MongoUser = mongoose.models.MongoUser || mongoose.model('MongoUser', MongoUserSchema)
+export default MongoUser
