@@ -29,3 +29,15 @@ export async function createUser(onboardingObject: InitialOnboardingProps, path:
         throw new Error(`Unable to create new User! Error Here: ${error.message}`)
     }
 }
+export async function findUserByClerk(clerkId: string) {
+    try {
+        connectToDb()
+        const mongoUser = await MongoUser.findOne({ clerkId: clerkId })
+            .populate('transactions')
+            .populate('bills')
+            .populate('subscriptions')
+        return await JSON.parse(JSON.stringify(mongoUser))
+    } catch (error: any) {
+        return
+    }
+}

@@ -62,7 +62,7 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
                     className='bg-cover bg-green-600'
                     offset={4}
                     speed={2}
-                    factor={2}
+                    factor={6}
                 />
 
                 <ParallaxLayer

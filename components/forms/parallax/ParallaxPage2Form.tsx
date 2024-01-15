@@ -54,7 +54,7 @@ const ParallaxPage2Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
                 // console.log('MY RESULTS HERE', results.data)
                 // const resultsByDate = await handleBankData(results.data)
                 const parsedData: any[] = results.data
-                setParsedResults(parsedData.splice(0, 10))
+                setParsedResults(parsedData)
                 // setParsedResults(resultsByDate)
             }
         })

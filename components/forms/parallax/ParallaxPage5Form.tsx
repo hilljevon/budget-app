@@ -25,7 +25,8 @@ const ParallaxPage5Form = ({ parallax, steps, setSteps, clerkId }: ParallaxProps
     console.log(formData)
     const handleSubmit = async () => {
         const submitObject = { ...formData, clerkId: clerkId }
-        const user = await createUser(submitObject, clerkId)
+        await createUser(submitObject, clerkId)
+        router.push('/')
     }
     return (
         <div className='bg-white rounded-lg flex flex-col items-center justify-center'>
