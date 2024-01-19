@@ -24,7 +24,7 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
     ])
     return (
         <div className='w-full h-full bg-gray-800'>
-            <Parallax ref={parallax} pages={5}>
+            <Parallax ref={parallax} pages={6}>
                 {/* background slide 1 */}
                 <ParallaxLayer
                     className='bg-green-400'
@@ -62,7 +62,7 @@ const OnboardingPage = ({ clerkId, username }: { clerkId: string, username: stri
                     className='bg-cover bg-green-600'
                     offset={4}
                     speed={2}
-                    factor={6}
+                    factor={10}
                 />
 
                 <ParallaxLayer

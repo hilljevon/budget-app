@@ -47,6 +47,11 @@ const ParallaxPage3Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
             return [...oldBills, { name: '', price: '', frequency: 'monthly', type: '' }]
         })
     }
+    const deleteRow = () => {
+        const newBills = [...bills]
+        newBills.pop()
+        setBills(newBills)
+    }
     const onSubmit = () => {
         setFormData && setFormData((oldFormData: OnboardingProps) => {
             return {
@@ -151,7 +156,14 @@ const ParallaxPage3Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
                                 value={bill.category}
                                 onChange={(event) => onChange(idx, event)}
                             />
+                            <button
+                                onClick={() => deleteRow()}
+                                className='text-xs ml-2 text-red-500'
+                            >
+                                Delete Row
+                            </button>
                         </div>
+
                     ))}
                     <button
                         className='rounded-md bg-green-600 px-3 mt-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible'

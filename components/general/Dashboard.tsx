@@ -25,6 +25,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from '../ui/button';
 import { UserButton } from '@clerk/nextjs';
 import DashGraphs from '../data/DashGraphs';
+import { useLogisticsContext } from '@/lib/contexts/LogisticsProvider';
 
 const stats = [
     { name: 'Revenue', value: '$405,091.00', change: '+4.75%', changeType: 'positive' },
@@ -33,17 +34,20 @@ const stats = [
     { name: 'Expenses', value: '$30,156.00', change: '+10.18%', changeType: 'negative' },
 ]
 
-
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Dashboard() {
+export default function Dashboard({ testArrays, recentDate }: { testArrays: number[], recentDate: string }) {
     const [mounted, setMounted] = useState(false);
+    const { spendingData, setSpendingData } = useLogisticsContext()
     useEffect(() => {
+        setSpendingData({
+            spendingAveragesByMonth: testArrays,
+            recentDate: recentDate
+        })
         setMounted(true);
     }, []);
-
     return (
         <>
             <UserButton />

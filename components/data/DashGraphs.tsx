@@ -1,12 +1,13 @@
 'use client'
-import React from 'react'
+import { useLogisticsContext } from '@/lib/contexts/LogisticsProvider';
+import { spendingGraphData } from '@/lib/utils';
+import React, { useEffect, useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 const data = [
     {
         name: 'Jan',
         uv: 4000,
         pv: 2400,
-
     },
     {
         name: 'Feb',
@@ -73,32 +74,43 @@ const data4 = [
     { name: 'Page G', uv: '3100', pv: '2000', amt: '6500' },
 ]
 const DashGraphs = () => {
+    const [yearlyData, setYearlyData] = useState([])
+    const { spendingData, setSpendingData } = useLogisticsContext()
+    const myData = []
+    const yearlySpendingArray = spendingGraphData(spendingData)
+    useEffect(() => {
+        setYearlyData(() => {
+            return spendingGraphData(spendingData)
+        })
+    }, [])
+    console.log('MY YEARLY DATA USESTATE HERE', yearlyData)
     return (
         <>
-            <div className='mt-4 grid grid-cols-6'>
-                <div className='col-span-3 mt-6'>
-                    <h2 className='text-lg font-semibold mb-3 ml-4'>Current Revenue</h2>
-                    <LineChart
-                        width={300}
-                        height={200}
-                        data={data}
-                        margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5,
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                    </LineChart>
-                </div>
-                <div className='col-span-3 mt-6'>
+            {yearlyData && (
+                <>
+                    <h2 className='text-lg font-semibold ml-4 mt-8'>Spending over past 12 months</h2>
+                    <div className='grid grid-cols-6'>
+                        <div className='col-span-3 mt-2'>
+                            <LineChart
+                                width={500}
+                                height={300}
+                                data={yearlyData}
+                                margin={{
+                                    top: 5,
+                                    right: 30,
+                                    left: 20,
+                                    bottom: 5,
+                                }}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Line type="monotone" dataKey="amount" stroke="#8884d8" activeDot={{ r: 8 }} />
+                            </LineChart>
+                        </div>
+                        {/* <div className='col-span-3 mt-6'>
                     <h2 className='text-lg font-semibold mb-3 ml-4'>Trajectory</h2>
                     <LineChart
                         width={300}
@@ -163,8 +175,11 @@ const DashGraphs = () => {
                         <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
                         <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
                     </LineChart>
-                </div>
-            </div>
+                </div> */}
+                    </div>
+                </>
+            )}
+
         </>
     )
 }

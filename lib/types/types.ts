@@ -19,6 +19,10 @@ export type OnboardingProps = {
     }[],
     transactionsByDate: any[]
 }
+export type LogisticsContextTypes = {
+    spendingAveragesByMonth: number[],
+    recentDate: string
+}
 export type CsvDataProps = {
     Amount: string,
     Balance: string,

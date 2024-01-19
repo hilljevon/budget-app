@@ -13,7 +13,7 @@ import { useOnboardingContext } from '@/lib/contexts/OnboardingProvider'
 import { OnboardingProps } from '@/lib/types/types'
 import { Input } from '../../ui/input'
 import Papa from 'papaparse'
-import { handleBankData } from '@/lib/utils'
+import { filterInitialBankData, handleBankData } from '@/lib/utils'
 
 interface ParallaxProps {
     parallax: any,
@@ -51,11 +51,12 @@ const ParallaxPage2Form = ({ parallax, steps, setSteps }: ParallaxProps) => {
             header: true,
             skipEmptyLines: true,
             complete: async function (results: any) {
-                // console.log('MY RESULTS HERE', results.data)
-                // const resultsByDate = await handleBankData(results.data)
                 const parsedData: any[] = results.data
-                setParsedResults(parsedData)
+                // CREATE STEP HERE TO HANDLE OUR BANK DATA
+                const filteredResults = filterInitialBankData(parsedData)
+                setParsedResults(filteredResults)
                 // setParsedResults(resultsByDate)
+                console.log('MY FILTERED RESULTS HERE', filteredResults)
             }
         })
     }

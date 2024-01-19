@@ -80,18 +80,13 @@ const TopNav = () => {
                                 </ul>
                             </li>
                             <li>
-                                <div className="text-xs font-semibold leading-6 text-gray-400">Your account</div>
+                                <div className="text-xs font-semibold leading-6 text-gray-400">Coming Soon</div>
                                 <ul role="list" className="-mx-2 mt-2 space-y-1">
                                     {teams.map((team) => (
                                         <li key={team.name}>
                                             <a
                                                 href={team.href}
-                                                className={classNames(
-                                                    team.current
-                                                        ? 'bg-gray-50 text-green-600'
-                                                        : 'text-gray-700 hover:text-green-600 hover:bg-gray-50',
-                                                    'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-                                                )}
+                                                className={'text-gray-700 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'}
                                             >
                                                 {/* <span
                                                     className={classNames(
@@ -125,8 +120,8 @@ const TopNav = () => {
                             </li>
                         </ul>
                     </nav>
-                </div>
-            </div>
+                </div >
+            </div >
             <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:hidden">
                 <button type="button" className="-m-2.5 p-2.5 text-gray-700 lg:hidden" onClick={() => { }}>
                     <span className="sr-only">Open sidebar</span>
