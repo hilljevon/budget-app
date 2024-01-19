@@ -2,7 +2,7 @@
 import { useLogisticsContext } from '@/lib/contexts/LogisticsProvider';
 import { spendingGraphData } from '@/lib/utils';
 import React, { useEffect, useState } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar } from 'recharts';
 const data = [
     {
         name: 'Jan',
@@ -78,6 +78,7 @@ const DashGraphs = () => {
     const { spendingData, setSpendingData } = useLogisticsContext()
     const myData = []
     const yearlySpendingArray = spendingGraphData(spendingData)
+    // console.log('MY INITIAL SPENDING DATA HERE', spendingData)
     useEffect(() => {
         setYearlyData(() => {
             return spendingGraphData(spendingData)
@@ -91,7 +92,7 @@ const DashGraphs = () => {
                     <h2 className='text-lg font-semibold ml-4 mt-8'>Spending over past 12 months</h2>
                     <div className='grid grid-cols-6'>
                         <div className='col-span-3 mt-2'>
-                            <LineChart
+                            <BarChart
                                 width={500}
                                 height={300}
                                 data={yearlyData}
@@ -107,8 +108,8 @@ const DashGraphs = () => {
                                 <YAxis />
                                 <Tooltip />
                                 <Legend />
-                                <Line type="monotone" dataKey="amount" stroke="#8884d8" activeDot={{ r: 8 }} />
-                            </LineChart>
+                                <Bar type="monotone" dataKey="amount" stroke="#8884d8" fill='#00c04b' />
+                            </BarChart>
                         </div>
                         {/* <div className='col-span-3 mt-6'>
                     <h2 className='text-lg font-semibold mb-3 ml-4'>Trajectory</h2>

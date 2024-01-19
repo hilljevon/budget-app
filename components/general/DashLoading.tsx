@@ -1,10 +1,17 @@
 'use client'
-import React from 'react'
-
+import React, { useEffect } from 'react'
+import type { } from 'ldrs'
 const DashLoading = () => {
+    useEffect(() => {
+        async function getLoader() {
+            const { spiral } = await import('ldrs')
+            spiral.register()
+        }
+        getLoader()
+    }, [])
     return (
-        <div>
-            <h1>Content Loading!</h1>
+        <div className='flex w-full h-screen justify-center items-center'>
+            <l-spiral color="coral"></l-spiral>
         </div>
     )
 }

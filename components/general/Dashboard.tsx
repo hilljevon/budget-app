@@ -51,7 +51,7 @@ export default function Dashboard({ testArrays, recentDate }: { testArrays: numb
     return (
         <>
             <UserButton />
-            <dl className="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm:grid-cols-2 lg:grid-cols-4 border-t-2 border-b-2">
+            {/* <dl className="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm:grid-cols-2 lg:grid-cols-4 border-t-2 border-b-2">
                 {stats.map((stat) => (
                     <div
                         key={stat.name}
@@ -71,7 +71,7 @@ export default function Dashboard({ testArrays, recentDate }: { testArrays: numb
                         </dd>
                     </div>
                 ))}
-            </dl>
+            </dl> */}
             {mounted && (
                 <DashGraphs />
             )}

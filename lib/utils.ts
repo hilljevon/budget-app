@@ -66,12 +66,17 @@ export function spendingGraphData(spendingData: LogisticsContextTypes) {
     }
   }
   const spendingArrayByYear: any = []
+  const months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
+  ];
+
   for (let i = 0; i < 12; i++) {
     const data = {
-      name: dateArray[i],
+      name: months[dateArray[i] - 1],
       amount: spendingData.spendingAveragesByMonth[i]
     }
-    spendingArrayByYear.push(data)
+    spendingArrayByYear.unshift(data)
   }
   return spendingArrayByYear
 }
