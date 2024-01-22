@@ -8,11 +8,8 @@ export default async function Page() {
   const clerkUser = await currentUser()
   if (!clerkUser) redirect('/signup')
   const mongoUser = await findUserByClerk(clerkUser?.id)
-  // if (!mongoUser) redirect('/onboarding')
   const recentDate = mongoUser.transactions[0].Date
-  const averages = handleBankData1(mongoUser.transactions)
-
   return (
-    <Dashboard testArrays={averages} recentDate={recentDate} />
+    <Dashboard recentDate={recentDate} transactions={mongoUser.transactions} />
   )
 }

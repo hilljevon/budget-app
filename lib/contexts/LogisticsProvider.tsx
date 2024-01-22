@@ -8,7 +8,9 @@ interface LogisticProviderType {
 const LogisticsContext = React.createContext<LogisticProviderType>({
     spendingData: {
         spendingAveragesByMonth: [],
-        recentDate: ''
+        recentDate: '',
+        spendingAveragesByWeek: [],
+        transactions: []
     },
     setSpendingData: () => null
 })
@@ -18,7 +20,9 @@ export const useLogisticsContext = () => {
 export function LogisticsProvider({ children }: { children: React.ReactNode }) {
     const [spendingData, setSpendingData] = useState({
         spendingAveragesByMonth: [],
-        recentDate: ''
+        recentDate: '',
+        spendingAveragesByWeek: [],
+        transactions: []
     })
     const values = { spendingData, setSpendingData }
     return (

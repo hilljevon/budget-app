@@ -1,31 +1,10 @@
 'use client'
 import { Fragment, useEffect, useState } from 'react'
-import {
-    Bars3Icon,
-    CalendarIcon,
-    ChartPieIcon,
-    DocumentDuplicateIcon,
-    FolderIcon,
-    HomeIcon,
-    ArrowDownCircleIcon,
-    ArrowPathIcon,
-    ArrowUpCircleIcon,
-    PlusCircleIcon,
-} from '@heroicons/react/24/outline'
-import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { Skeleton } from "@/components/ui/skeleton"
-import { Button } from '../ui/button';
 import { UserButton } from '@clerk/nextjs';
 import DashGraphs from '../data/DashGraphs';
 import { useLogisticsContext } from '@/lib/contexts/LogisticsProvider';
+import { CsvDataProps } from '@/lib/types/types';
+import { handleBankData1 } from '@/lib/utils';
 
 const stats = [
     { name: 'Revenue', value: '$405,091.00', change: '+4.75%', changeType: 'positive' },
@@ -37,14 +16,18 @@ const stats = [
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
+interface transactionProps {
 
-export default function Dashboard({ testArrays, recentDate }: { testArrays: number[], recentDate: string }) {
+}
+export default function Dashboard({ recentDate, transactions }: { recentDate: string, transactions: CsvDataProps[] }) {
     const [mounted, setMounted] = useState(false);
-    const { spendingData, setSpendingData } = useLogisticsContext()
+    const { setSpendingData } = useLogisticsContext()
+    const testArrays = handleBankData1(transactions)
     useEffect(() => {
         setSpendingData({
             spendingAveragesByMonth: testArrays,
-            recentDate: recentDate
+            recentDate: recentDate,
+            transactions
         })
         setMounted(true);
     }, []);

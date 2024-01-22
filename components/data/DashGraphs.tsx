@@ -78,7 +78,6 @@ const DashGraphs = () => {
     const { spendingData, setSpendingData } = useLogisticsContext()
     const myData = []
     const yearlySpendingArray = spendingGraphData(spendingData)
-    // console.log('MY INITIAL SPENDING DATA HERE', spendingData)
     useEffect(() => {
         setYearlyData(() => {
             return spendingGraphData(spendingData)
@@ -91,7 +90,7 @@ const DashGraphs = () => {
                 <>
                     <h2 className='text-lg font-semibold ml-4 mt-8'>Spending over past 12 months</h2>
                     <div className='grid grid-cols-6'>
-                        <div className='col-span-3 mt-2'>
+                        <div className='col-span-6 mt-2'>
                             <BarChart
                                 width={500}
                                 height={300}
@@ -111,6 +110,7 @@ const DashGraphs = () => {
                                 <Bar type="monotone" dataKey="amount" stroke="#8884d8" fill='#00c04b' />
                             </BarChart>
                         </div>
+
                         {/* <div className='col-span-3 mt-6'>
                     <h2 className='text-lg font-semibold mb-3 ml-4'>Trajectory</h2>
                     <LineChart

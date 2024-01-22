@@ -5,6 +5,40 @@ import { CsvDataProps, LogisticsContextTypes } from "./types/types"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+function getWeekNumber(d: any) {
+  // Copy date so don't modify original
+  d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  // Set to nearest Thursday: current date + 4 - day number
+  // Make Sunday's day number 7
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  // Get first day of year
+  let yearStart: any = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  // Calculate full weeks to nearest Thursday
+  let weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  // Return array of year and week number
+  return [d.getUTCFullYear(), weekNo];
+}
+function groupByWeek(transactions: CsvDataProps[]) {
+  let grouped: any = {};
+
+  transactions.forEach((transaction: CsvDataProps) => {
+    const date = new Date(transaction.Date);
+    const [year, week] = getWeekNumber(date);
+    const weekKey = `${year}-W${week}`;
+
+    if (!grouped[weekKey]) {
+      grouped[weekKey] = [];
+    }
+
+    grouped[weekKey].push(transaction);
+  });
+
+  return grouped;
+}
+const convertToDateObject = (dateString: string) => {
+  const [month, day, year]: any[] = dateString.split('/');
+  return new Date(year, month - 1, day);
+};
 export function handleBankData(csvData: CsvDataProps[]) {
   const groupedData: { [key: string]: CsvDataProps[] } = {}
   csvData.forEach((item: CsvDataProps) => {
@@ -51,8 +85,8 @@ export function handleBankData1(allData: CsvDataProps[]) {
   // averages should return another array of arrays, where each array represents the latest month and that respective average
   return averages
 }
-export function spendingGraphData(spendingData: LogisticsContextTypes) {
-  const length = spendingData.spendingAveragesByMonth.length
+
+export function spendingPerYear(spendingData: LogisticsContextTypes) {
   const latestMonth = parseInt(spendingData.recentDate.split('/')[0])
   const dateArray = []
   // this will loop from 1-11, we are going to subtract from our current month that the csv data has
@@ -79,4 +113,46 @@ export function spendingGraphData(spendingData: LogisticsContextTypes) {
     spendingArrayByYear.unshift(data)
   }
   return spendingArrayByYear
+}
+
+export function spendingPerWeek(spendingData: LogisticsContextTypes) {
+  const TEN_WEEKS_IN_MS = 10 * 7 * 24 * 60 * 60 * 1000;
+  // converts a date string to a date object
+  // FOR NOW, CURRENT DATE IS BASED OFF OF THE LAST TRANSACTION DATE. HOWEVER, WHEN WE CREATE ACTUAL APP WE NEED TO USE new Date()
+  const currentDate = new Date(spendingData.recentDate);
+  const tenWeeksAgo = new Date(currentDate.getTime() - TEN_WEEKS_IN_MS);
+  // GET ALL TRANSACTIONS IN THE LAST 10 WEEKS
+  const results = spendingData.transactions.filter((item: CsvDataProps) => {
+    const itemDate = convertToDateObject(item.Date);
+    return itemDate >= tenWeeksAgo;
+  });
+  // SEPARATE THESE TRANSACTIONS INTO A OBJECT FILTERED BY WEEK
+  let groupedTransactions = groupByWeek(results);
+  console.log('MY GROUPED TRANSACTIONS HERE', groupedTransactions)
+  // CONVERT OBJECT INTO AN ARRAY OF ARRAYS
+  const transactionArrays = Object.values(groupedTransactions)
+  // GET THE AVERAGES OF EACH RESPECTIVE ARRAY
+  const weeklyAverages = transactionArrays.map((array: any) => {
+    let sum = 0
+    array.forEach((transaction: CsvDataProps) => {
+      sum = sum + parseFloat(transaction.Amount)
+    })
+    return sum
+  })
+  const weeklyData = []
+  // CREATE OBJECTS COMPATIBLE WITH RECHARTS
+  for (let i = 0; i < 12; i++) {
+    let weekObject = {
+      name: i + 1,
+      amount: weeklyAverages[i]
+    }
+
+    weeklyData.unshift(weekObject)
+  }
+  return weeklyData
+}
+export function spendingGraphData(spendingData: LogisticsContextTypes) {
+  const annualSpending = spendingPerYear(spendingData)
+  const weeklySpending = spendingPerWeek(spendingData)
+  return annualSpending
 }
