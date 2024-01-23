@@ -59,6 +59,23 @@ export type InitialOnboardingProps = {
     transactionsByDate: any,
     clerkId: string
 }
+export type mongoTransactionType = {
+    Amount: number,
+    Currency: string,
+    Date: string,
+    Description: string,
+    author: string,
+    _id: string
+}
+export type recentActivityType = {
+    Amount: number,
+    Currency: string,
+    Date: string,
+    Description: string,
+    author: string,
+    _id: string,
+    daysAgo: string
+}
 interface transactionsByDate {
     [key: string]: {
         Amount: string | number,

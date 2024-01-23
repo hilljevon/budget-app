@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { CsvDataProps, LogisticsContextTypes } from "./types/types"
+import { CsvDataProps, LogisticsContextTypes, mongoTransactionType, recentActivityType } from "./types/types"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -155,4 +155,37 @@ export function spendingGraphData(spendingData: LogisticsContextTypes) {
   const annualSpending = spendingPerYear(spendingData)
   const weeklySpending = spendingPerWeek(spendingData)
   return annualSpending
+}
+export function getRecentActivity(spendingData: LogisticsContextTypes) {
+  function daysBetween(date1: Date, date2: Date) {
+    // One day in milliseconds
+    const oneDay = 1000 * 60 * 60 * 24;
+    // Calculate the time difference between the two dates
+    const diffInTime = date2.getTime() - date1.getTime();
+    // Calculate the days difference
+    return Math.ceil(diffInTime / oneDay);
+  }
+  const splicedTransactions = spendingData.transactions.slice(0, 25)
+  console.log('ALL MY TRANSACTIONS HERE', spendingData.transactions)
+  const groupedData: { [key: string]: any[] } = {}
+  const oneDay = 1000 * 60 * 60 * 24;
+  const dateToday = new Date(spendingData.recentDate)
+  splicedTransactions.forEach((item: CsvDataProps) => {
+    const date = new Date(item.Date)
+    const daysAgo = daysBetween(date, dateToday)
+    if (!groupedData[item.Date]) {
+      groupedData[item.Date] = [{ ...item, daysAgo }]
+    } else {
+      groupedData[item.Date].push({ ...item, daysAgo })
+    }
+  })
+  const slicedArray = Object.values(groupedData)
+  const days = slicedArray.map((arr: recentActivityType[]) => {
+    return {
+      date: `${arr[0].daysAgo} days ago`,
+      dateTime: arr[0].Date,
+      transactions: [...arr]
+    }
+  })
+  return days
 }
