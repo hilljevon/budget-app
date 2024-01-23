@@ -91,3 +91,7 @@ export type LogisticsContextTypes = {
     spendingAveragesByWeek: number[],
     transactions: CsvDataProps[]
 }
+export type SpendingChartContextTypes = {
+    yearlySpending: { name: string, amount: number }[],
+    weeklySpending: { name: string, amount: number }[],
+}

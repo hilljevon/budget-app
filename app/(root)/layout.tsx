@@ -7,6 +7,7 @@ import MainSection from '@/components/shared/MainSection'
 import DashboardRight from '@/components/general/DashboardRight'
 import NewExpenseIcon from '@/components/shared/NewExpenseIcon'
 import { LogisticsProvider } from '@/lib/contexts/LogisticsProvider'
+import { ChartProvider } from '@/lib/contexts/ChartProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,17 +18,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <LogisticsProvider>
-      <ClerkProvider>
-        <html lang="en">
-          <body className={inter.className}>
-            <TopNav />
-            <MainSection children={children} />
-            <DashboardRight />
-            <NewExpenseIcon />
-          </body>
-        </html>
-      </ClerkProvider>
-    </LogisticsProvider>
+    <ClerkProvider>
+      <LogisticsProvider>
+        <ChartProvider>
+          <html lang="en">
+            <body className={inter.className}>
+              <TopNav />
+              <MainSection children={children} />
+              <DashboardRight />
+              <NewExpenseIcon />
+            </body>
+          </html>
+        </ChartProvider>
+      </LogisticsProvider>
+    </ClerkProvider>
   )
 }

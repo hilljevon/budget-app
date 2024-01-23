@@ -134,13 +134,13 @@ export function spendingPerWeek(spendingData: LogisticsContextTypes) {
   const weeklyAverages = transactionArrays.map((array: any) => {
     let sum = 0
     array.forEach((transaction: CsvDataProps) => {
-      sum = sum + parseFloat(transaction.Amount)
+      sum = sum + Math.abs(parseFloat(transaction.Amount))
     })
     return sum
   })
   const weeklyData = []
   // CREATE OBJECTS COMPATIBLE WITH RECHARTS
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 11; i++) {
     let weekObject = {
       name: i + 1,
       amount: weeklyAverages[i]
@@ -151,9 +151,9 @@ export function spendingPerWeek(spendingData: LogisticsContextTypes) {
   return weeklyData
 }
 export function spendingGraphData(spendingData: LogisticsContextTypes) {
-  const annualSpending = spendingPerYear(spendingData)
+  const yearlySpending = spendingPerYear(spendingData)
   const weeklySpending = spendingPerWeek(spendingData)
-  return annualSpending
+  return { yearlySpending, weeklySpending }
 }
 export function getRecentActivity(spendingData: LogisticsContextTypes) {
   function daysBetween(date1: Date, date2: Date) {
