@@ -74,7 +74,7 @@ export type recentActivityType = {
     Description: string,
     author: string,
     _id: string,
-    daysAgo: string
+    daysAgo: string | number
 }
 interface transactionsByDate {
     [key: string]: {

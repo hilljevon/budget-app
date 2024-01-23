@@ -96,7 +96,7 @@ export function spendingPerYear(spendingData: LogisticsContextTypes) {
       dateArray.push(latestMonth - i)
       // otherwise, we subtract the other way around
     } else {
-      dateArray.push(i - latestMonth)
+      dateArray.push(latestMonth - i + 12)
     }
   }
   const spendingArrayByYear: any = []
@@ -119,7 +119,7 @@ export function spendingPerWeek(spendingData: LogisticsContextTypes) {
   const TEN_WEEKS_IN_MS = 10 * 7 * 24 * 60 * 60 * 1000;
   // converts a date string to a date object
   // FOR NOW, CURRENT DATE IS BASED OFF OF THE LAST TRANSACTION DATE. HOWEVER, WHEN WE CREATE ACTUAL APP WE NEED TO USE new Date()
-  const currentDate = new Date(spendingData.recentDate);
+  const currentDate = new Date();
   const tenWeeksAgo = new Date(currentDate.getTime() - TEN_WEEKS_IN_MS);
   // GET ALL TRANSACTIONS IN THE LAST 10 WEEKS
   const results = spendingData.transactions.filter((item: CsvDataProps) => {
@@ -128,7 +128,6 @@ export function spendingPerWeek(spendingData: LogisticsContextTypes) {
   });
   // SEPARATE THESE TRANSACTIONS INTO A OBJECT FILTERED BY WEEK
   let groupedTransactions = groupByWeek(results);
-  console.log('MY GROUPED TRANSACTIONS HERE', groupedTransactions)
   // CONVERT OBJECT INTO AN ARRAY OF ARRAYS
   const transactionArrays = Object.values(groupedTransactions)
   // GET THE AVERAGES OF EACH RESPECTIVE ARRAY
@@ -164,12 +163,12 @@ export function getRecentActivity(spendingData: LogisticsContextTypes) {
     const diffInTime = date2.getTime() - date1.getTime();
     // Calculate the days difference
     return Math.ceil(diffInTime / oneDay);
+
   }
   const splicedTransactions = spendingData.transactions.slice(0, 25)
-  console.log('ALL MY TRANSACTIONS HERE', spendingData.transactions)
   const groupedData: { [key: string]: any[] } = {}
   const oneDay = 1000 * 60 * 60 * 24;
-  const dateToday = new Date(spendingData.recentDate)
+  const dateToday = new Date()
   splicedTransactions.forEach((item: CsvDataProps) => {
     const date = new Date(item.Date)
     const daysAgo = daysBetween(date, dateToday)
@@ -181,10 +180,24 @@ export function getRecentActivity(spendingData: LogisticsContextTypes) {
   })
   const slicedArray = Object.values(groupedData)
   const days = slicedArray.map((arr: recentActivityType[]) => {
-    return {
-      date: `${arr[0].daysAgo} days ago`,
-      dateTime: arr[0].Date,
-      transactions: [...arr]
+    if (arr[0].daysAgo == 0) {
+      return {
+        date: 'Today',
+        dateTime: arr[0].Date,
+        transactions: [...arr]
+      }
+    } else if (arr[0].daysAgo == 1) {
+      return {
+        date: 'Yesterday',
+        dateTime: arr[0].Date,
+        transactions: [...arr]
+      }
+    } else {
+      return {
+        date: `${arr[0].daysAgo} days ago`,
+        dateTime: arr[0].Date,
+        transactions: [...arr]
+      }
     }
   })
   return days

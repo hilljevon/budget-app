@@ -83,7 +83,6 @@ const DashGraphs = () => {
             return spendingGraphData(spendingData)
         })
     }, [])
-    console.log('MY YEARLY DATA USESTATE HERE', yearlyData)
     return (
         <>
             {yearlyData && (

@@ -8,6 +8,7 @@ export default async function Page() {
   const clerkUser = await currentUser()
   if (!clerkUser) redirect('/signup')
   const mongoUser = await findUserByClerk(clerkUser?.id)
+  // if (!mongoUser) redirect('/onboarding')
   const recentDate = mongoUser.transactions[0].Date
   return (
     <Dashboard recentDate={recentDate} transactions={mongoUser.transactions} />
