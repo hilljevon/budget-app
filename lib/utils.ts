@@ -5,6 +5,20 @@ import { CsvDataProps, LogisticsContextTypes, mongoTransactionType, recentActivi
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+export function formatDate(date: any) {
+  var d = new Date(date),
+    month = '' + (d.getMonth() + 1), // Months are zero indexed
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+
+  // Pad the month and day with a leading zero if they are less than 10
+  if (month.length < 2)
+    month = '0' + month;
+  if (day.length < 2)
+    day = '0' + day;
+
+  return [month, day, year].join('/');
+}
 function getWeekNumber(d: any) {
   // Copy date so don't modify original
   d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));

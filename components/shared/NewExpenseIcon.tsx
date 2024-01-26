@@ -13,6 +13,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from '../ui/button'
+import NewExpenseForm from '../forms/NewExpenseForm'
 
 const NewExpenseIcon = () => {
     return (
@@ -25,13 +26,7 @@ const NewExpenseIcon = () => {
                     <SheetHeader>
                         <SheetTitle>Create new expense</SheetTitle>
                         <SheetDescription>
-                            <Skeleton className="mt-4 w-48 h-8 rounded-full" />
-                            <Skeleton className="mt-20 w-48 h-8 rounded-full" />
-                            <Skeleton className="mt-20 w-48 h-8 rounded-full" />
-                            <Skeleton className="mt-20 w-48 h-8 rounded-full" />
-                            <Skeleton className="mt-20 w-48 h-8 rounded-full" />
-                            <Skeleton className="mt-20 w-48 h-8 rounded-full" />
-                            <Button className='mt-20'>Submit</Button>
+                            <NewExpenseForm />
                         </SheetDescription>
                     </SheetHeader>
                 </SheetContent>

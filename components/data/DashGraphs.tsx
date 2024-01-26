@@ -76,9 +76,6 @@ const DashGraphs = () => {
                         <CarouselPrevious />
                         <CarouselNext />
                     </Carousel>
-
-
-
                 </>
             )}
 
