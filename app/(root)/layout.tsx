@@ -4,7 +4,6 @@ import '../globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 import TopNav from '@/components/shared/TopNav'
 import MainSection from '@/components/shared/MainSection'
-import DashboardRight from '@/components/general/DashboardRight'
 import NewExpenseIcon from '@/components/shared/NewExpenseIcon'
 import { LogisticsProvider } from '@/lib/contexts/LogisticsProvider'
 import { ChartProvider } from '@/lib/contexts/ChartProvider'
@@ -25,7 +24,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={inter.className}>
               <TopNav />
               <MainSection children={children} />
-              <DashboardRight />
               <NewExpenseIcon />
             </body>
           </html>

@@ -1,99 +1,18 @@
 'use client'
 import React, { Fragment } from 'react'
-import {
-    Bars3Icon,
-    CalendarIcon,
-    ChartPieIcon,
-    DocumentDuplicateIcon,
-    FolderIcon,
-    HomeIcon,
-    ArrowDownCircleIcon,
-    ArrowPathIcon,
-    ArrowUpCircleIcon,
-    PlusCircleIcon,
-} from '@heroicons/react/24/outline'
-import { useLogisticsContext } from '@/lib/contexts/LogisticsProvider'
 import { getRecentActivity } from '@/lib/utils'
-import { recentActivityType } from '@/lib/types/types'
-// const days = [
-//     {
-//         date: 'Today',
-//         dateTime: '2023-03-22',
-//         transactions: [
-//             {
-//                 id: 1,
-//                 invoiceNumber: '00012',
-//                 href: '#',
-//                 amount: '$7,600.00 USD',
-//                 tax: '$500.00',
-//                 status: 'Paid',
-//                 client: 'Reform',
-//                 description: 'Website redesign',
-//                 icon: ArrowUpCircleIcon,
-//             },
-//             {
-//                 id: 2,
-//                 invoiceNumber: '00011',
-//                 href: '#',
-//                 amount: '$10,000.00 USD',
-//                 status: 'Withdraw',
-//                 client: 'Tom Cook',
-//                 description: 'Salary',
-//                 icon: ArrowDownCircleIcon,
-//             },
-//             {
-//                 id: 3,
-//                 invoiceNumber: '00009',
-//                 href: '#',
-//                 amount: '$2,000.00 USD',
-//                 tax: '$130.00',
-//                 status: 'Overdue',
-//                 client: 'Tuple',
-//                 description: 'Logo design',
-//                 icon: ArrowPathIcon,
-//             },
-//         ],
-//     },
-//     {
-//         date: 'Yesterday',
-//         dateTime: '2023-03-21',
-//         transactions: [
-//             {
-//                 id: 4,
-//                 invoiceNumber: '00010',
-//                 href: '#',
-//                 amount: '$14,000.00 USD',
-//                 tax: '$900.00',
-//                 status: 'Paid',
-//                 client: 'SavvyCal',
-//                 description: 'Website redesign',
-//                 icon: ArrowUpCircleIcon,
-//             },
-//         ],
-//     },
-// ]
+import { TransactionType, recentActivityType } from '@/lib/types/types'
 const statuses = {
     Paid: 'text-green-700 bg-green-50 ring-green-600/20',
     Withdraw: 'text-gray-600 bg-gray-50 ring-gray-500/10',
     Overdue: 'text-red-700 bg-red-50 ring-red-600/10',
 }
-interface TransactionType {
-    id: number,
-    invoiceNumber: string
-    href: string,
-    amount: string,
-    tax: string
-    status: string,
-    client: string,
-    description: string,
-    icon: any,
-}
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
-const DashboardRight = () => {
-    const { spendingData } = useLogisticsContext()
-    const days = getRecentActivity(spendingData)
+
+const DashboardRight = ({ transactions }: { transactions: TransactionType[] }) => {
+    const days = getRecentActivity(transactions)
     return (
         <>
             {days && (
@@ -169,11 +88,8 @@ const DashboardRight = () => {
                         </div>
                     </div>
                 </aside>
-
             )}
-
         </>
     )
 }
-
 export default DashboardRight

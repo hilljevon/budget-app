@@ -1,9 +1,7 @@
 'use client'
 import { useChartContext } from '@/lib/contexts/ChartProvider';
-import { useLogisticsContext } from '@/lib/contexts/LogisticsProvider';
-import { spendingGraphData } from '@/lib/utils';
-import React, { useEffect, useState } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar } from 'recharts';
+import React from 'react'
+import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar } from 'recharts';
 import {
     Carousel,
     CarouselContent,
@@ -13,13 +11,7 @@ import {
 } from "@/components/ui/carousel"
 
 const DashGraphs = () => {
-    const { spendingData } = useLogisticsContext()
-    const { spendingCharts, setSpendingCharts } = useChartContext()
-    useEffect(() => {
-        setSpendingCharts(() => {
-            return spendingGraphData(spendingData)
-        })
-    }, [])
+    const { spendingCharts } = useChartContext()
     return (
         <>
             {spendingCharts && (
@@ -78,7 +70,6 @@ const DashGraphs = () => {
                     </Carousel>
                 </>
             )}
-
         </>
     )
 }

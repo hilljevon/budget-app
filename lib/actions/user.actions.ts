@@ -2,15 +2,15 @@
 import { revalidatePath } from "next/cache"
 import MongoUser from "../models/user.model"
 import { connectToDb } from "../mongoose"
-import { InitialOnboardingProps } from "../types/types"
+import { OnboardingProps } from "../types/types"
 import { createOnboardingTransactions } from "./transaction.actions"
 import { createInitialInvoices } from "./invoice.actions"
 
-export async function createUser(onboardingObject: InitialOnboardingProps, path: string) {
+export async function createUser(onboardingObject: OnboardingProps, clerkId: string, path: string) {
     try {
         connectToDb()
         const mongoUser = await MongoUser.create({
-            clerkId: onboardingObject.clerkId,
+            clerkId,
             firstName: onboardingObject.firstName,
             lastName: onboardingObject.lastName,
             email: onboardingObject.email,
@@ -24,6 +24,7 @@ export async function createUser(onboardingObject: InitialOnboardingProps, path:
         mongoUser.bills = allBills
         mongoUser.subscriptions = allSubscriptions
         await mongoUser.save()
+        revalidatePath(path)
         console.log('USER SAVED', mongoUser)
     } catch (error: any) {
         throw new Error(`Unable to create new User! Error Here: ${error.message}`)

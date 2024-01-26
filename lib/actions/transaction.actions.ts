@@ -39,3 +39,11 @@ export async function createOnboardingTransactions(transactions: InitialTransact
         throw new Error(`Unable to create onboarding transactions! Error here: ${error.message}`)
     }
 }
+export async function createNewTransaction(transaction: InitialTransactions) {
+    try {
+        connectToDb()
+
+    } catch (error: any) {
+        throw new Error(`Cannot create new transaction! Error here: ${error.message}`)
+    }
+}

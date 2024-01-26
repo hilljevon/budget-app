@@ -28,6 +28,7 @@ import {
 import { cn } from "@/lib/utils"
 import { CalendarIcon } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
+import { currentUser } from '@clerk/nextjs'
 
 const formSchema = z.object({
     Description: z.string(),
@@ -50,9 +51,7 @@ const NewExpenseForm = () => {
     })
     const onSubmit = (values: z.infer<typeof formSchema>) => {
         console.log(values)
-        console.log('MY DATE BELOW')
-        const formattedDate = formatDate(Date.now())
-        console.log(formattedDate)
+        const formattedDate = formatDate(values.Date)
     }
     return (
         <>
