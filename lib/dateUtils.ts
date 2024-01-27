@@ -48,17 +48,18 @@ export const convertToDateObject = (dateString: string) => {
 };
 export function getLast12Months() {
     const now = new Date();
-    let currentMonth = now.getMonth() + 1; // getMonth() is 0-indexed, add 1 for 1-12 format
+    let currentMonth = now.getMonth() + 1; // January is 1
     let months = [];
-
     for (let i = 0; i < 12; i++) {
-        months.unshift(currentMonth); // Add to the beginning of the array
+        months.push(currentMonth); // Add to the end of the array
         currentMonth--;
         if (currentMonth === 0) {
             currentMonth = 12; // Reset to December after January
         }
     }
 
+    // Reverse the array to get the desired order
+    console.log('MY MONTHS ARE HERE', months);
     return months;
 }
 export function monthYearKeys(csvData: TransactionType[]) {
