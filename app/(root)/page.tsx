@@ -8,6 +8,6 @@ export default async function Page() {
   if (!clerkUser) redirect('/signup')
   const mongoUser = await findUserByClerk(clerkUser?.id)
   return (
-    <Dashboard transactions={mongoUser.transactions} />
+    <Dashboard transactions={mongoUser.transactions} clerkId={clerkUser.id} />
   )
 }

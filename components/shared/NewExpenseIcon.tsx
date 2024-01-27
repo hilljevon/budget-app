@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Button } from '../ui/button'
 import NewExpenseForm from '../forms/NewExpenseForm'
 
-const NewExpenseIcon = () => {
+const NewExpenseIcon = ({ clerkId }: { clerkId: string }) => {
     return (
         <div className='absolute right-10 bottom-8 hover:cursor-pointer bg-white px-2 py-2 rounded-lg '>
             <Sheet>
@@ -26,7 +26,7 @@ const NewExpenseIcon = () => {
                     <SheetHeader>
                         <SheetTitle>Create new expense</SheetTitle>
                         <SheetDescription>
-                            <NewExpenseForm />
+                            <NewExpenseForm clerkId={clerkId} />
                         </SheetDescription>
                     </SheetHeader>
                 </SheetContent>

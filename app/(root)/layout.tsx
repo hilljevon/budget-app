@@ -5,7 +5,6 @@ import { ClerkProvider } from '@clerk/nextjs'
 import TopNav from '@/components/shared/TopNav'
 import MainSection from '@/components/shared/MainSection'
 import NewExpenseIcon from '@/components/shared/NewExpenseIcon'
-import { LogisticsProvider } from '@/lib/contexts/LogisticsProvider'
 import { ChartProvider } from '@/lib/contexts/ChartProvider'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -18,17 +17,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <LogisticsProvider>
-        <ChartProvider>
-          <html lang="en">
-            <body className={inter.className}>
-              <TopNav />
-              <MainSection children={children} />
-              <NewExpenseIcon />
-            </body>
-          </html>
-        </ChartProvider>
-      </LogisticsProvider>
+      <ChartProvider>
+        <html lang="en">
+          <body className={inter.className}>
+            <TopNav />
+            <MainSection children={children} />
+          </body>
+        </html>
+      </ChartProvider>
     </ClerkProvider>
   )
 }

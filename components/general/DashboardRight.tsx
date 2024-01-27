@@ -11,7 +11,7 @@ function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
 
-const DashboardRight = ({ transactions }: { transactions: TransactionType[] }) => {
+const DashboardRight = ({ transactions, clerkId }: { transactions: TransactionType[], clerkId: string }) => {
     const days = getRecentActivity(transactions)
     return (
         <>

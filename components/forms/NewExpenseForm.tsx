@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/select"
 import { format } from "date-fns"
 import { Button } from '../ui/button'
-import { formatDate } from '@/lib/utils'
 import {
     Popover,
     PopoverContent,
@@ -28,7 +27,9 @@ import {
 import { cn } from "@/lib/utils"
 import { CalendarIcon } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
-import { currentUser } from '@clerk/nextjs'
+import { usePathname, useRouter } from 'next/navigation'
+import { formatDate } from '@/lib/dateUtils'
+import { createNewTransaction } from '@/lib/actions/transaction.actions'
 
 const formSchema = z.object({
     Description: z.string(),
@@ -39,7 +40,7 @@ const formSchema = z.object({
         required_error: 'Please select the date for transaction'
     })
 })
-const NewExpenseForm = () => {
+const NewExpenseForm = ({ clerkId }: { clerkId: string }) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -49,9 +50,20 @@ const NewExpenseForm = () => {
             Category: '',
         },
     })
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values)
-        const formattedDate = formatDate(values.Date)
+    const path = usePathname()
+    const router = useRouter()
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        const newTransaction = {
+            Amount: values.Amount,
+            Category: values.Category,
+            Currency: 'USD',
+            Date: formatDate(values.Date),
+            Description: values.Description,
+            Balance: values.newAvailableBalance
+        }
+        await createNewTransaction(newTransaction, clerkId, path)
+        form.reset()
+        router.push('/')
     }
     return (
         <>

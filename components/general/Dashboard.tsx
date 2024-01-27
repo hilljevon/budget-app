@@ -6,8 +6,9 @@ import { TransactionType } from '@/lib/types/types';
 import { spendingGraphData } from '@/lib/utils';
 import { useChartContext } from '@/lib/contexts/ChartProvider';
 import DashboardRight from './DashboardRight';
+import NewExpenseIcon from '../shared/NewExpenseIcon';
 
-export default function Dashboard({ transactions }: { transactions: TransactionType[] }) {
+export default function Dashboard({ transactions, clerkId }: { transactions: TransactionType[], clerkId: string }) {
     const [mounted, setMounted] = useState(false);
     const { setSpendingCharts } = useChartContext()
     useEffect(() => {
@@ -22,9 +23,10 @@ export default function Dashboard({ transactions }: { transactions: TransactionT
             {mounted && (
                 <>
                     <DashGraphs />
-                    <DashboardRight transactions={transactions} />
+                    <DashboardRight transactions={transactions} clerkId={clerkId} />
                 </>
             )}
+            <NewExpenseIcon clerkId={clerkId} />
         </>
     )
 }

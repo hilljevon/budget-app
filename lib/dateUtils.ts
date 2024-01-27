@@ -96,3 +96,17 @@ export function getMonthlyAverages(allData: TransactionType[]) {
     // averages should return another array of arrays, where each array represents the latest month and that respective average
     return averages
 }
+export function sortObjectsByDateDesc(objects: any[]) {
+    return objects.sort((a, b) => {
+        // Convert "MM/DD/YYYY" to "YYYY/MM/DD" for accurate date comparison
+        const reformattedDateA = a.Date.split('/').reverse().join('/');
+        const reformattedDateB = b.Date.split('/').reverse().join('/');
+
+        // Convert to date objects
+        const dateA: any = new Date(reformattedDateA);
+        const dateB: any = new Date(reformattedDateB);
+
+        // Compare dates for sorting in descending order
+        return dateB - dateA;
+    });
+}
