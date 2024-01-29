@@ -6,6 +6,7 @@ import TopNav from '@/components/shared/TopNav'
 import MainSection from '@/components/shared/MainSection'
 import NewExpenseIcon from '@/components/shared/NewExpenseIcon'
 import { ChartProvider } from '@/lib/contexts/ChartProvider'
+import { InvoiceProvider } from '@/lib/contexts/InvoiceProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,14 +18,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <ChartProvider>
-        <html lang="en">
-          <body className={inter.className}>
-            <TopNav />
-            <MainSection children={children} />
-          </body>
-        </html>
-      </ChartProvider>
+      <InvoiceProvider>
+        <ChartProvider>
+          <html lang="en">
+            <body className={inter.className}>
+              <TopNav />
+              <MainSection children={children} />
+            </body>
+          </html>
+        </ChartProvider>
+      </InvoiceProvider>
     </ClerkProvider>
   )
 }

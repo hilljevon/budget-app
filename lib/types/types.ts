@@ -40,3 +40,11 @@ export type SpendingChartContextTypes = {
     yearlySpending: { name: string, amount: number }[],
     weeklySpending: { name: string, amount: number }[],
 }
+export type InvoiceType = {
+    _id: any,
+    name: string,
+    category: string,
+    frequency: string,
+    price: number,
+    type: string,
+}

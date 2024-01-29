@@ -1,4 +1,5 @@
 'use client'
+import { UserButton } from '@clerk/nextjs'
 import {
     Bars3Icon,
     CalendarIcon,
@@ -109,14 +110,11 @@ const TopNav = () => {
                                     href="#"
                                     className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50"
                                 >
-                                    <img
-                                        className="h-8 w-8 rounded-full bg-gray-50"
-                                        src="https://img.freepik.com/premium-psd/3d-rendering-cartoon-boy-avatar-illustration_52659-1061.jpg?w=826"
-                                        alt=""
-                                    />
+                                    <UserButton />
                                     <span className="sr-only">Your profile</span>
                                     <span aria-hidden="true">Jevon Hill</span>
                                 </a>
+
                             </li>
                         </ul>
                     </nav>

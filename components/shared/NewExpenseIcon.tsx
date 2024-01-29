@@ -11,16 +11,13 @@ import {
 import {
     PlusCircleIcon,
 } from '@heroicons/react/24/outline'
-import { Skeleton } from "@/components/ui/skeleton"
-import { Button } from '../ui/button'
 import NewExpenseForm from '../forms/NewExpenseForm'
-
 const NewExpenseIcon = ({ clerkId }: { clerkId: string }) => {
     return (
-        <div className='absolute right-10 bottom-8 hover:cursor-pointer bg-white px-2 py-2 rounded-lg '>
+        <div className='fixed right-10 bottom-0 hover:cursor-pointer bg-transparent px-2 py-2 rounded-lg '>
             <Sheet>
                 <SheetTrigger>
-                    <PlusCircleIcon className='h-10 w-10 shrink-0' aria-hidden="true" />
+                    <PlusCircleIcon className='h-12 w-12 shrink-0' aria-hidden="true" />
                 </SheetTrigger>
                 <SheetContent className="w-[400px] sm:w-[540px]">
                     <SheetHeader>
@@ -34,5 +31,4 @@ const NewExpenseIcon = ({ clerkId }: { clerkId: string }) => {
         </div>
     )
 }
-
 export default NewExpenseIcon
