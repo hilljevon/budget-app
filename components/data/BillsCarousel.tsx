@@ -74,30 +74,32 @@ const data1 = [
 ];
 const BillsCarousel = () => {
     const { bills, subscriptions } = useInvoiceContext()
-    console.log('MY BILLS HERE, INSIDE CAROUSEL', bills)
-    console.log('MY SUBSCRIPTIONS HERE, INSIDE CAROUSEL', subscriptions)
     return (
         <div className='mt-12'>
-            <Carousel className='max-w-xs'>
+            <Carousel className='max-w-xl'>
                 <CarouselContent>
                     <CarouselItem>
                         <div className="flex flex-col justify-start items-center">
                             <h1 className='text-lg font-semibold mt-8'>Bills breakdown</h1>
-                            <PieChart width={175} height={200}>
+                            <PieChart width={175} height={250}>
                                 <Pie
-                                    data={data}
+                                    data={bills}
                                     cx="50%"
                                     cy="50%"
                                     labelLine={false}
                                     label={renderCustomizedLabel}
                                     outerRadius={80}
                                     fill="#8884d8"
-                                    dataKey="value"
+                                    dataKey="price"
                                 >
                                     {data.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        <Cell
+                                            key={`cell-${index}`}
+                                            fill={COLORS[index % COLORS.length]}
+                                        />
                                     ))}
                                 </Pie>
+                                <Legend />
                             </PieChart>
                         </div>
                     </CarouselItem>

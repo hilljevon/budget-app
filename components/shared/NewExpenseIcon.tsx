@@ -11,7 +11,11 @@ import {
 import {
     PlusCircleIcon,
 } from '@heroicons/react/24/outline'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
 import NewExpenseForm from '../forms/NewExpenseForm'
+import NewBillForm from '../forms/NewBillForm'
+import NewSubscriptionForm from '../forms/NewSubscriptionForm'
 const NewExpenseIcon = ({ clerkId }: { clerkId: string }) => {
     return (
         <div className='fixed right-10 bottom-0 hover:cursor-pointer bg-transparent px-2 py-2 rounded-lg '>
@@ -20,10 +24,26 @@ const NewExpenseIcon = ({ clerkId }: { clerkId: string }) => {
                     <PlusCircleIcon className='h-12 w-12 shrink-0' aria-hidden="true" />
                 </SheetTrigger>
                 <SheetContent className="w-[400px] sm:w-[540px]">
+
                     <SheetHeader>
-                        <SheetTitle>Create new expense</SheetTitle>
+                        <SheetTitle>Create new</SheetTitle>
                         <SheetDescription>
-                            <NewExpenseForm clerkId={clerkId} />
+                            <Tabs defaultValue="account" className="w-[400px]">
+                                <TabsList>
+                                    <TabsTrigger value="expense">Expense</TabsTrigger>
+                                    <TabsTrigger value="bill">Bill</TabsTrigger>
+                                    <TabsTrigger value="subscription">Subscription</TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="expense">
+                                    <NewExpenseForm clerkId={clerkId} />
+                                </TabsContent>
+                                <TabsContent value="bill">
+                                    <NewBillForm clerkId={clerkId} />
+                                </TabsContent>
+                                <TabsContent value="subscription">
+                                    <NewSubscriptionForm clerkId={clerkId} />
+                                </TabsContent>
+                            </Tabs>
                         </SheetDescription>
                     </SheetHeader>
                 </SheetContent>
