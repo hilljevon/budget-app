@@ -59,7 +59,6 @@ export function getLast12Months() {
     }
 
     // Reverse the array to get the desired order
-    console.log('MY MONTHS ARE HERE', months);
     return months;
 }
 export function monthYearKeys(csvData: TransactionType[]) {

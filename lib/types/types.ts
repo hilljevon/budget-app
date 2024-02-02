@@ -39,6 +39,8 @@ export type recentActivityType = {
 export type SpendingChartContextTypes = {
     yearlySpending: { name: string, amount: number }[],
     weeklySpending: { name: string, amount: number }[],
+    overUnderYearly: { name: string, amount: number }[],
+    overUnderWeekly: { name: string, amount: number }[],
 }
 export type InvoiceType = {
     _id: any,
@@ -47,4 +49,18 @@ export type InvoiceType = {
     frequency: string,
     price: number,
     type: string,
+}
+export type MongoUserType = {
+    _id: string,
+    clerkId: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    phone: string,
+    transactions: TransactionType[],
+    currentBalance: number,
+    monthlyIncome: number,
+    netGoals: any[],
+    subscriptions: InvoiceType[],
+    bills: InvoiceType[]
 }

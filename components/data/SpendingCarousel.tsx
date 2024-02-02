@@ -8,22 +8,22 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
-import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, ReferenceLine, ComposedChart, Line } from 'recharts';
 
-const SpendingCarousel = () => {
+const SpendingCarousel = ({ height, width }: { height: number, width: number }) => {
     const { spendingCharts } = useChartContext()
     return (
         <>
             {spendingCharts && (
-                <Carousel className='max-w-sm max-h-48'>
+                <Carousel className='max-w-xl max-h-48 pl-10'>
                     <CarouselContent>
                         {/* last 12 months spending */}
                         <CarouselItem>
                             <div>
                                 <h2 className='text-lg font-semibold ml-4 mt-8'>Spending over past 12 months</h2>
                                 <BarChart
-                                    width={350}
-                                    height={150}
+                                    width={width}
+                                    height={height}
                                     data={spendingCharts.yearlySpending}
                                     margin={{
                                         top: 5,
@@ -46,8 +46,8 @@ const SpendingCarousel = () => {
                             <div className=''>
                                 <h2 className='text-lg font-semibold ml-4 mt-8'>Spending over last 10 weeks</h2>
                                 <BarChart
-                                    width={350}
-                                    height={150}
+                                    width={width}
+                                    height={height}
                                     data={spendingCharts.weeklySpending}
                                     margin={{
                                         top: 5,
@@ -63,6 +63,58 @@ const SpendingCarousel = () => {
                                     <Legend />
                                     <Bar type="monotone" dataKey="amount" stroke="#8884d8" fill='#00c04b' />
                                 </BarChart>
+                            </div>
+                        </CarouselItem>
+                        {/* over under yearly */}
+                        <CarouselItem>
+                            <div className=''>
+                                <h2 className='text-lg font-semibold ml-4 mt-8'>Over/Under Yearly</h2>
+                                <ComposedChart
+                                    width={width}
+                                    height={height}
+                                    data={spendingCharts.overUnderYearly}
+                                    margin={{
+                                        top: 5,
+                                        right: 30,
+                                        left: 20,
+                                        bottom: 5,
+                                    }}
+                                >
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <ReferenceLine y={0} stroke="#000" />
+                                    <Legend />
+                                    <Bar type="monotone" dataKey="amount" stroke="#8884d8" fill='#00c04b' />
+                                    <Line type="monotone" dataKey="amount" stroke="#ff7300" />
+                                </ComposedChart>
+                            </div>
+                        </CarouselItem>
+                        {/* over under weekly */}
+                        <CarouselItem>
+                            <div className=''>
+                                <h2 className='text-lg font-semibold ml-4 mt-8'>Over/Under Weekly</h2>
+                                <ComposedChart
+                                    width={width}
+                                    height={height}
+                                    data={spendingCharts.overUnderWeekly}
+                                    margin={{
+                                        top: 5,
+                                        right: 30,
+                                        left: 20,
+                                        bottom: 5,
+                                    }}
+                                >
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <ReferenceLine y={0} stroke="#000" />
+                                    <Legend />
+                                    <Bar type="monotone" dataKey="amount" stroke="#8884d8" fill='#00c04b' />
+                                    <Line type="monotone" dataKey="amount" stroke="#ff7300" />
+                                </ComposedChart>
                             </div>
                         </CarouselItem>
                     </CarouselContent>

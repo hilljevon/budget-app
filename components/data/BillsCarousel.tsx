@@ -72,16 +72,16 @@ const data1 = [
         amt: 2100,
     },
 ];
-const BillsCarousel = () => {
+const BillsCarousel = ({ height, width }: { height: number, width: number }) => {
     const { bills, subscriptions } = useInvoiceContext()
     return (
-        <div className='mt-12'>
+        <div className='mt-48'>
             <Carousel className='max-w-xl'>
                 <CarouselContent>
                     <CarouselItem>
                         <div className="flex flex-col justify-start items-center">
                             <h1 className='text-lg font-semibold mt-8'>Bills breakdown</h1>
-                            <PieChart width={175} height={250}>
+                            <PieChart width={width} height={height}>
                                 <Pie
                                     data={bills}
                                     cx="50%"
@@ -106,8 +106,8 @@ const BillsCarousel = () => {
                     <CarouselItem>
                         <div className="flex flex-col justify-start items-center">
                             <BarChart
-                                width={300}
-                                height={200}
+                                width={width}
+                                height={height}
                                 data={data1}
                                 margin={{
                                     top: 20,

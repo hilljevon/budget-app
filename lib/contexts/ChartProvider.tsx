@@ -8,7 +8,9 @@ interface SpendingProviderType {
 const ChartContext = React.createContext<SpendingProviderType>({
     spendingCharts: {
         yearlySpending: [],
-        weeklySpending: []
+        weeklySpending: [],
+        overUnderWeekly: [],
+        overUnderYearly: []
     },
     setSpendingCharts: () => null
 })
@@ -18,7 +20,9 @@ export const useChartContext = () => {
 export function ChartProvider({ children }: { children: React.ReactNode }) {
     const [spendingCharts, setSpendingCharts] = useState({
         yearlySpending: [],
-        weeklySpending: []
+        weeklySpending: [],
+        overUnderYearly: [],
+        overUnderWeekly: []
     })
     const values = { spendingCharts, setSpendingCharts }
     return (

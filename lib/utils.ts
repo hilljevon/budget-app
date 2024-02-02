@@ -6,6 +6,14 @@ import { convertToDateObject, getLast12Months, getMonthlyAverages, groupByWeek }
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+interface yearlySpending {
+  name: string,
+  amount: number
+}
+interface weeklySpendingType {
+  name: number,
+  amount: number
+}
 // THIS FUNCTION FILTERS OUR CSV DATA SO WE ONLY RETURN ALL NEGATIVE TRANSACTIONS THAT ARE NOT ACC2ACC TRANSFERS.
 export function filterInitialBankData(allData: TransactionType[]) {
   const sortedData: any[] = []
@@ -68,10 +76,23 @@ export function spendingPerWeek(transactions: TransactionType[]) {
   }
   return weeklyData
 }
-export function spendingGraphData(transactions: TransactionType[]) {
+export function overUnder12(yearlySpending: yearlySpending[], monthlyIncome: number) {
+  return yearlySpending.map((month: yearlySpending) => {
+    return { ...month, amount: monthlyIncome - month.amount }
+  })
+}
+export function overUnderWeek(weeklySpending: weeklySpendingType[], monthlyIncome: number) {
+  const weeklyIncome = monthlyIncome / 4
+  return weeklySpending.map((week: weeklySpendingType) => {
+    return { ...week, amount: weeklyIncome - week.amount }
+  })
+}
+export function spendingGraphData(transactions: TransactionType[], monthlyIncome: number) {
   const yearlySpending = spendingPerYear(transactions)
   const weeklySpending = spendingPerWeek(transactions)
-  return { yearlySpending, weeklySpending }
+  const overUnderYearly = overUnder12(yearlySpending, monthlyIncome)
+  const overUnderWeekly = overUnderWeek(weeklySpending, monthlyIncome)
+  return { yearlySpending, weeklySpending, overUnderYearly, overUnderWeekly }
 }
 export function getRecentActivity(transactions: TransactionType[]) {
   function daysBetween(date1: Date, date2: Date) {
