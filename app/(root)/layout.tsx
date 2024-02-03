@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '../globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
-import TopNav from '@/components/shared/TopNav'
 import MainSection from '@/components/shared/MainSection'
 import NewExpenseIcon from '@/components/shared/NewExpenseIcon'
 import { ChartProvider } from '@/lib/contexts/ChartProvider'
 import { InvoiceProvider } from '@/lib/contexts/InvoiceProvider'
+import LeftNav from '@/components/shared/LeftNav'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ChartProvider>
           <html lang="en">
             <body className={inter.className}>
-              <TopNav />
+              <LeftNav />
               <MainSection children={children} />
             </body>
           </html>

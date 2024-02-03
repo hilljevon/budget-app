@@ -37,10 +37,18 @@ export async function findUserByClerk(clerkId: string) {
             .populate('transactions')
             .populate('bills')
             .populate('subscriptions')
-        console.log('MY BILLS HERE', mongoUser.bills)
-        console.log('MY SUBSCRIPTIONS HERE', mongoUser.subscriptions)
         return await JSON.parse(JSON.stringify(mongoUser))
     } catch (error: any) {
         return
+    }
+}
+export async function getTransactionsByClerk(clerkId: string) {
+    try {
+        connectToDb()
+        const mongoUser = await MongoUser.findOne({ clerkId: clerkId }).populate('transactions')
+        const transactions = JSON.parse(JSON.stringify(mongoUser.transactions.slice(0, 1000)))
+        return transactions
+    } catch (error: any) {
+        throw new Error(`Cannot get transactions by clerkId. Error here: ${error.message}`)
     }
 }

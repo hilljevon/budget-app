@@ -1,4 +1,5 @@
 'use client'
+import { MongoUserType } from '@/lib/types/types'
 import { UserButton } from '@clerk/nextjs'
 import {
     Bars3Icon,
@@ -13,14 +14,9 @@ import {
     PlusCircleIcon,
 } from '@heroicons/react/24/outline'
 import Image from 'next/image'
-const navigation = [
-    { name: 'Dashboard', href: '#', icon: HomeIcon, count: '5', current: true },
-    { name: 'Transactions', href: '#', icon: ChartPieIcon, current: false },
-    { name: 'Spending', href: '#', icon: FolderIcon, count: '12', current: false },
-    // { name: 'Team', href: '#', icon: UsersIcon, current: false },
-    { name: 'Bills', href: '#', icon: CalendarIcon, count: '20+', current: false },
-    { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
-]
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
 const teams = [
     { id: 1, name: 'Goals', href: '#', initial: 'G', current: false },
     { id: 2, name: 'Income', href: '#', initial: 'I', current: false },
@@ -29,8 +25,38 @@ const teams = [
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
-
-const TopNav = () => {
+interface navigationInterface {
+    name: string,
+    href: string,
+    icon: any,
+    current: boolean,
+    count?: any
+}
+const LeftNav = () => {
+    const path = usePathname()
+    // dynamic sidebar state
+    const [navigation, setNavigation] = useState([
+        { name: 'Dashboard', href: '/', icon: HomeIcon, count: '5', current: false },
+        { name: 'Transactions', href: '/transactions', icon: ChartPieIcon, current: false },
+        { name: 'Spending', href: '/spending', icon: FolderIcon, count: '12', current: false },
+        { name: 'Bills', href: '/bills', icon: CalendarIcon, count: '20+', current: false },
+        { name: 'Documents', href: '/documents', icon: DocumentDuplicateIcon, current: false },
+    ])
+    // for dynamic left sidebar
+    useEffect(() => {
+        setNavigation((oldNavigation: any[]) => {
+            const newNavigation = oldNavigation.map((nav: navigationInterface) => {
+                if (nav.name == 'Dashboard' && path == '/') {
+                    return { ...nav, current: true }
+                } else if (`/${nav.name.toLowerCase()}` == path) {
+                    return { ...nav, current: true }
+                } else {
+                    return nav
+                }
+            })
+            return newNavigation
+        })
+    }, [])
     return (
         <>
             <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col">
@@ -127,16 +153,12 @@ const TopNav = () => {
                 </button>
                 <div className="flex-1 text-sm font-semibold leading-6 text-gray-900">Dashboard</div>
                 <a href="#">
+                    <UserButton />
                     <span className="sr-only">Your profile</span>
-                    <img
-                        className="h-8 w-8 rounded-full bg-gray-50"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                    />
                 </a>
             </div>
         </>
     )
 }
 
-export default TopNav
+export default LeftNav

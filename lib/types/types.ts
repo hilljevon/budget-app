@@ -25,7 +25,8 @@ export type TransactionType = {
     Category: string,
     Currency: string,
     Date: string,
-    Description: string
+    Description: string,
+    _id: string
 }
 export type recentActivityType = {
     Amount: number,
