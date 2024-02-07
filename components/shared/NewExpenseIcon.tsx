@@ -14,8 +14,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import NewExpenseForm from '../forms/NewExpenseForm'
-import NewBillForm from '../forms/NewBillForm'
-import NewSubscriptionForm from '../forms/NewSubscriptionForm'
+import NewInvoiceForm from '../forms/NewInvoiceForm'
 const NewExpenseIcon = ({ clerkId }: { clerkId: string }) => {
     return (
         <div className='fixed right-10 bottom-0 hover:cursor-pointer bg-transparent px-2 py-2 rounded-lg '>
@@ -38,10 +37,10 @@ const NewExpenseIcon = ({ clerkId }: { clerkId: string }) => {
                                     <NewExpenseForm clerkId={clerkId} />
                                 </TabsContent>
                                 <TabsContent value="bill">
-                                    <NewBillForm clerkId={clerkId} />
+                                    <NewInvoiceForm clerkId={clerkId} invoiceType='bill' />
                                 </TabsContent>
                                 <TabsContent value="subscription">
-                                    <NewSubscriptionForm clerkId={clerkId} />
+                                    <NewInvoiceForm clerkId={clerkId} invoiceType='subscription' />
                                 </TabsContent>
                             </Tabs>
                         </SheetDescription>

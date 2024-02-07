@@ -67,7 +67,6 @@ const NewExpenseForm = ({ clerkId }: { clerkId: string }) => {
     }
     return (
         <>
-
             <Form {...form} >
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <div className='grid grid-cols-6 py-2 px-4'>

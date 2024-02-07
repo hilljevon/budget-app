@@ -3,11 +3,18 @@ import { revalidatePath } from "next/cache"
 import User from "../models/user.model"
 import { connectToDb } from "../mongoose"
 import Invoice from "../models/invoice.model"
+import MongoUser from "../models/user.model"
 interface invoiceProp {
     name: string,
     category: string,
     price: string | number,
     frequency: string
+}
+interface newInvoiceInterface {
+    invoice: invoiceProp,
+    clerkId: string,
+    path: string,
+    invoiceType: string
 }
 export async function createInitialInvoices(bills: invoiceProp[], subscriptions: invoiceProp[], authorId: string) {
     try {
@@ -28,5 +35,14 @@ export async function createInitialInvoices(bills: invoiceProp[], subscriptions:
         return { allBills, allSubscriptions }
     } catch (error: any) {
         throw new Error(``)
+    }
+}
+export async function createNewInvoice(newInvoiceObject: newInvoiceInterface) {
+    try {
+        connectToDb()
+        const mongoUser = await MongoUser.findOne({ clerkId: newInvoiceObject.clerkId })
+
+    } catch (error: any) {
+        throw new Error(`Unable to create new invoice. Error here: ${error.message}`)
     }
 }

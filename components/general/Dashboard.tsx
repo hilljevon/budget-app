@@ -8,6 +8,7 @@ import DashboardRight from './DashboardRight';
 import NewExpenseIcon from '../shared/NewExpenseIcon';
 import { useInvoiceContext } from '@/lib/contexts/InvoiceProvider';
 import LeftNav from '../shared/LeftNav';
+import TestDashboard from './TestDashboard';
 
 export default function Dashboard({ transactions, clerkId, bills, subscriptions, mongoUser }:
     { transactions: TransactionType[], clerkId: string, bills: InvoiceType[], subscriptions: InvoiceType[], mongoUser: MongoUserType }) {
@@ -26,6 +27,7 @@ export default function Dashboard({ transactions, clerkId, bills, subscriptions,
         <>
             {mounted && (
                 <>
+                    {/* <TestDashboard /> */}
                     <DashGraphs />
                     <DashboardRight transactions={transactions} clerkId={clerkId} />
                 </>
